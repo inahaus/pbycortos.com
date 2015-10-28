@@ -1,0 +1,44 @@
+<h2><a href="index.php?controlador=ediciones" title="volver">Volver</a></h2>
+<div id="main">
+    <?
+    include_once($config->get('root').$config->get('adminViewsFolder').$config->get('jsAdmin')."fckeditor/fckeditor.php");
+    if(!empty($mensaje)){
+    echo $mensaje;
+    }
+    ?>
+    <h3><? if($_REQUEST['accion']=='nuevaEdiciones' || $_REQUEST['accion']=='crearEdiciones'){ echo "Crear Ediciones";}else{ echo "Editar Ediciones";}?></h3>
+    <form action="index.php?controlador=ediciones&amp;accion=<?if($_REQUEST['accion']!='editarEdiciones' && $_REQUEST['accion']!='guardarEdiciones'){ echo 'crearEdiciones';}else{ echo 'guardarEdiciones';}?>" method="post" class="jNice" enctype="multipart/form-data">
+          <div class="portlet2">
+            <div class="portlet2-header">Opciones Ediciones</div>
+            <div class="portlet2-content">
+                <fieldset>
+                    <p><label>Titulo:</label><input type="text" class="text-long" name="titulo" value="<? echo $datos->titulo;?>"/></p>
+		    <p><label>Lugar:</label><input type="text" class="text-long" name="lugar" value="<? echo $datos->lugar;?>"/></p>
+		    <p><label>Tipo de Competencia:</label><input type="text" class="text-long" name="tipo" value="<? echo $datos->tipo;?>"/></p>
+                    <p><label>Jurado:</label><input type="text" class="text-long" name="jurado" value="<? echo $datos->jurado;?>"/></p>
+		    <p><label>Url Sitio:</label><input type="text" class="text-long" name="link" value="<? echo $datos->link;?>"/></p>                    
+                    <p><label>Fecha:</label><input type="text" class="text-long" name="fecha" value="<? echo $datos->fecha;?>"/></p>
+		    <?php
+			if(!empty($datos->imagen)){?>
+		    <label>Imagen Actual:</label>
+		    <p>
+			<img src="<?php echo $config->get('urlImagenes').$datos->imagen;?>" alt="<?php echo basename($datos->imagen);?>"/>
+		    </p>
+		    <?php
+			}
+			?>
+		    <p><label>Imagen:</label>
+			<input type="file" class="text-long" name="imagen" value=""/>
+		    </p>
+                </fieldset>
+            </div>
+        </div>
+        
+        <fieldset>
+            <input type="hidden" name="id"  value="<? echo $datos->id;?>"/>
+            <input type="submit" value="Guardar" />
+        </fieldset>
+    </form>
+</div>
+<!-- // #main -->
+<div class="clear"></div>

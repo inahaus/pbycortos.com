@@ -1,0 +1,75 @@
+<h2><a href="index.php?controlador=invitados" title="volver">Volver</a></h2>
+<div id="main">
+    <?
+    include_once($config->get('root').$config->get('adminViewsFolder').$config->get('jsAdmin')."fckeditor/fckeditor.php");
+    if(!empty($mensaje)){
+    echo $mensaje;
+    }
+    ?>
+    <h3><? if($_REQUEST['accion']=='nuevaInvitados' || $_REQUEST['accion']=='crearInvitados'){ echo "Crear Invitados";}else{ echo "Editar Invitados";}?></h3>
+    <form action="index.php?controlador=invitados&amp;accion=<?if($_REQUEST['accion']!='editarInvitados' && $_REQUEST['accion']!='guardarInvitados'){ echo 'crearInvitados';}else{ echo 'guardarInvitados';}?>" method="post" class="jNice" enctype="multipart/form-data">
+          <div class="portlet2">
+            <div class="portlet2-header">Opciones Invitados</div>
+            <div class="portlet2-content">
+                <fieldset>
+                    <p><label>Nombre:</label><input type="text" class="text-long" name="nombre" value="<? echo $datos->nombre;?>"/></p>
+		    <p><label>Introducción:</label>
+			<?php
+			$oFCKeditor = new FCKeditor('intro') ;
+			$oFCKeditor->ToolbarSet = 'Normal' ;
+			$oFCKeditor->BasePath = $config->get('urlRoot').$config->get('adminViewsFolder').'js/fckeditor/' ;
+			//Ancho del TextArea
+			$oFCKeditor->Width = '100%' ;
+			//Alto del TextArea
+			$oFCKeditor->Height = '400' ;
+			if($datos->intro ==''){
+			    $oFCKeditor->Value = '' ;
+			}
+			else{
+			    $oFCKeditor->Value = $datos->intro;
+			}
+			$oFCKeditor->Create() ;
+			?>
+		    </p>
+		    <p><label>Contenido:</label>
+			<?php
+			$oFCKeditor = new FCKeditor('texto') ;
+			$oFCKeditor->ToolbarSet = 'Normal' ;
+			$oFCKeditor->BasePath = $config->get('urlRoot').$config->get('adminViewsFolder').'js/fckeditor/' ;
+			//Ancho del TextArea
+			$oFCKeditor->Width = '100%' ;
+			//Alto del TextArea
+			$oFCKeditor->Height = '400' ;
+			if($datos->texto ==''){
+			    $oFCKeditor->Value = '' ;
+			}
+			else{
+			    $oFCKeditor->Value = $datos->texto;
+			}
+			$oFCKeditor->Create() ;
+			?>
+		    </p>
+		    <?php
+			if(!empty($datos->foto)){?>
+		    <label>Imagen Actual:</label>
+		    <p>
+			<img src="<?php echo $config->get('urlImagenes').$datos->foto;?>" alt="<?php echo basename($datos->nombre);?>"/>
+		    </p>
+		    <?php
+			}
+			?>
+		    <p><label>Imagen:</label>
+			<input type="file" class="text-long" name="foto" value=""/>
+		    </p>
+                </fieldset>
+            </div>
+        </div>
+        
+        <fieldset>
+            <input type="hidden" name="id"  value="<? echo $datos->id;?>"/>
+            <input type="submit" value="Guardar" />
+        </fieldset>
+    </form>
+</div>
+<!-- // #main -->
+<div class="clear"></div>

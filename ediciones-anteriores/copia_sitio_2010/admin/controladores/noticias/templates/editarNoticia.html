@@ -1,0 +1,94 @@
+<h2><a href="index.php?controlador=noticias" title="volver">Volver</a></h2>
+<div id="main">
+    <?
+    include_once($config->get('root').$config->get('adminViewsFolder').$config->get('jsAdmin')."fckeditor/fckeditor.php");
+    if(!empty($mensaje)){
+    echo $mensaje;
+    }
+    ?>
+    <h3><? if($_REQUEST['accion']=='nuevaNoticia' || $_REQUEST['accion']=='crearNoticia'){ echo "Crear Noticia";}else{ echo "Editar Noticia";}?></h3>
+    <form action="index.php?controlador=noticias&amp;accion=<?if($_REQUEST['accion']!='editarNoticia' && $_REQUEST['accion']!='guardarNoticia'){ echo 'crearNoticia';}else{ echo 'guardarNoticia';}?>" method="post" class="jNice" enctype="multipart/form-data">
+
+          <div class="portlet2">
+            <div class="portlet2-header">Opciones Noticias</div>
+            <div class="portlet2-content">
+                <fieldset>
+                    <p><label>Titulo:</label><input type="text" class="text-long" name="titulo" value="<? echo $datos->titulo;?>"/></p>
+                    <p><label>Introducción:</label>
+                        <?php
+        		$oFCKeditor = new FCKeditor('intro') ;
+        		$oFCKeditor->ToolbarSet = 'Normal' ;
+        		$oFCKeditor->BasePath = $config->get('urlRoot').$config->get('adminViewsFolder').'js/fckeditor/' ;
+        		//Ancho del TextArea
+        		$oFCKeditor->Width = '100%' ;
+        		//Alto del TextArea
+        		$oFCKeditor->Height = '400' ;
+        		if($datos->intro ==''){
+			    $oFCKeditor->Value = '' ;
+        		}
+        		else{
+			    $oFCKeditor->Value = $datos->intro;
+        		}
+        		$oFCKeditor->Create() ;
+        		?>
+                    </p>
+                    <p><label>Contenido:</label>
+                        <?php
+        		$oFCKeditor = new FCKeditor('texto') ;
+        		$oFCKeditor->ToolbarSet = 'Normal' ;
+        		$oFCKeditor->BasePath = $config->get('urlRoot').$config->get('adminViewsFolder').'js/fckeditor/' ;//'http://'.$_SERVER['HTTP_HOST'].'/'.$ubicacion[1]."/".$ubicacion[2].'/template/js/fckeditor/' ;
+        		//Ancho del TextArea
+        		$oFCKeditor->Width = '100%' ;
+        		//Alto del TextArea
+        		$oFCKeditor->Height = '400' ;
+        		if($datos->texto==''){
+			    $oFCKeditor->Value = '' ;
+        		}
+        		else{
+			    $oFCKeditor->Value = $datos->texto;
+        		}
+        		$oFCKeditor->Create() ;
+        		?>
+                    </p>
+		    <?php
+			if(!empty($datos->imagen)){?>
+		    <label>Imagen Actual:</label>
+		    <p>
+			<img src="<?php echo $config->get('urlImagenes').$datos->imagen;?>" alt="<?php echo basename($datos->imagen);?>"/>
+		    </p>
+		    <?php
+			}
+			?>
+		    <p><label>Imagen:</label>
+			<input type="file" class="text-long" name="imagen" value=""/>
+		    </p>
+		    <p><label>Url Video:</label><input type="text" class="text-long" name="video" value="<? echo $datos->video;?>"/></p>
+                    <?php
+                    if(!empty($datos->fecha)){?>
+                    <p><label>Fecha:</label><input type="text" class="text-short" readonly="readonly" id="datepicker" name="fecha" value="<? echo $datos->fecha;?>"/></p>
+                    <?php
+                    }
+                    ?>
+                </fieldset>
+            </div>
+        </div>
+
+
+        <div class="portlet">
+            <div class="portlet-header">Opciones SEO</div>
+            <div class="portlet-content">
+                <fieldset>
+                    <p><label>Titulo SEO:</label><input type="text" class="text-long" name="titulo_seo" value="<? echo $datos->titulo_seo;?>"/></p>
+                    <p><label>Descripción SEO:</label><textarea name="desc_seo" rows="1" cols="1"><? echo $datos->desc_seo;?></textarea></p>
+                    <p><label>Keywords SEO:</label><textarea name="keys_seo" rows="1" cols="1"><? echo $datos->keys_seo;?></textarea></p>
+                </fieldset>
+            </div>
+        </div>
+        <fieldset>
+            <input type="hidden" name="id"  value="<? echo $datos->id;?>"/>
+            <input type="submit" value="Guardar" />
+        </fieldset>
+    </form>
+</div>
+<!-- // #main -->
+<div class="clear"></div>

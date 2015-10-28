@@ -1,0 +1,26 @@
+<h2><a href="index.php?controlador=lenguajes" class="ajax" title="volver">Volver</a></h2>
+<div id="main">
+    <?php
+    if(!empty($mensaje)){
+    echo $mensaje;
+    }    
+
+    ?>
+    <h3><? if($_REQUEST['accion']=='nuevoLenguajes' || $_REQUEST['accion']=='crearLenguajes'){ echo "Crear Idioma";}else{ echo "Editar Idioma";}?></h3>
+    <form action="index.php?controlador=lenguajes&amp;accion=<?if($_REQUEST['accion']!='editarLenguajes' && $_REQUEST['accion']!="guardarLenguajes"){ echo "crearLenguajes";}else{ echo "guardarLenguajes";}?>" method="post" class="jNice" enctype="multipart/form-data">
+	  <fieldset>
+	    <p><label>Idioma:</label>
+		<input type="text" class="text-long" name="idioma" value="<?php echo $datos->idioma;?>"/>
+	    </p>
+	    <p><label>Siglas:</label>
+		<input type="text" class="text-long" name="siglas" value="<?php echo $datos->siglas;?>"/>
+	    </p>
+
+	    <input type="hidden" name="id"  value="<? echo $datos->id;?>"/>
+	    <input type="submit" value="Guardar" />
+	</fieldset>
+
+    </form>
+</div>
+<!-- // #main -->               
+<div class="clear"></div>

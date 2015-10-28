@@ -1,0 +1,50 @@
+<h2><a href="index.php?controlador=secciones&amp;accion=nuevaSeccion" id="ajax" title="Crear Secci&oacute;">Crear Nueva Secci&oacute;n</a></h2>
+<div id="main">
+    <?
+    if(!empty($mensaje)){
+    echo $mensaje;
+    }
+
+    ?>
+    <h3>Listado de Secciones</h3>
+    <table cellpadding="0" cellspacing="0" summary="">
+	<thead>
+	    <tr>
+		<th>#</th>
+		<th>Nombre</th>
+		<th>&nbsp;</th>
+	    </tr>
+	</thead>
+	<?
+        $num_fila = 1;
+	$info = $paginador->superArray();
+	$i=1 + ( $info['porPagina'] * ( $info['numEstaPagina'] - 1 ) );
+	while ($seccion=$paginador->fetchResultado()){					    
+	    $j++;
+	    if ($num_fila%2!=0){
+		$class="class='odd'";
+	    }
+	    else{
+		$class="";
+	    }?>
+	<tr <? echo $class;?>>
+	    <td><? echo $seccion['id'];?></td>
+	    <td><? echo $seccion['titulo'];?></td>
+	    <td class="action">
+		<a class="edit" href="index.php?controlador=secciones&amp;accion=editarSeccion&amp;id=<? echo $seccion['id'];?>" title="Editar Secci&oacute;n">
+									Editar
+		</a>
+		<a class="delete" onclick="if (ask()) window.location='index.php?controlador=secciones&amp;accion=borrarSeccion&amp;id=<? echo $seccion['id'];?>'" href="#" title="Borrar Secci&oacute;n">
+									Borrar
+		</a>
+	    </td>
+	</tr>
+	<?php
+	$num_fila++;
+	}?>
+	<tr><td colspan="3">&nbsp;</td></tr>
+    </table>
+    <? echo "<div id='navigation'>".$paginador->fetchNavegacion()."</div>";?>
+</div>
+<!-- // #main -->               
+<div class="clear"></div>

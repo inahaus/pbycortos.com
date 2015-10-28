@@ -1,0 +1,49 @@
+<h2><a href="index.php?controlador=secciones" id="ajax" title="volver">Volver</a></h2>
+<div id="main">
+    <?
+    include_once($config->get('root').$config->get('adminViewsFolder').$config->get('jsAdmin')."fckeditor/fckeditor.php");
+    if(!empty($mensaje)){
+    echo $mensaje;
+    }
+    //echo "<pre>";print_r ($datos);echo "</pre>";
+
+
+    ?> <h3><? if($_REQUEST['accion']=='nuevaSeccion' || $_REQUEST['accion']=='crearSeccion'){ echo "Crear Secci&oacute;n";}else{ echo "Editar Secci&oacute;n";}?></h3>
+    <form action="index.php?controlador=secciones&amp;accion=<?if($_REQUEST['accion']!='editarSeccion' && $_REQUEST['accion']!="guardarSeccion"){ echo "crearSeccion";}else{ echo "guardarSeccion";}?>" method="post" class="jNice">
+	  <div class="portlet2">
+            <div class="portlet2-header">Opciones Secci&oacute;n</div>
+	    <div class="portlet2-content">
+		<fieldset>
+		    <p><label>Titulo:</label>
+			<input type="text" class="text-long" name="titulo" value="<?php echo $datos['titulo'];?>"/>
+		    </p>
+		    <p><label>Contenido:</label>
+			<?php
+			$oFCKeditor = new FCKeditor('texto') ;
+			$oFCKeditor->ToolbarSet = 'Normal' ;
+			$oFCKeditor->BasePath = $config->get('urlRoot').$config->get('adminViewsFolder').'js/fckeditor/' ;
+			//Ancho del TextArea
+			$oFCKeditor->Width = '100%' ;
+			//Alto del TextArea
+			$oFCKeditor->Height = '400' ;
+			if($datos['texto'] ==''){
+			$oFCKeditor->Value = '' ;
+			}
+			else{
+			$oFCKeditor->Value = $datos['texto'];
+			}
+			$oFCKeditor->Create() ;
+                    				?>      
+		    </p>		    
+		</fieldset>
+	    </div>
+	</div>
+	<fieldset>
+	    <input type="hidden" name="id"  value="<? echo $datos['id'];?>"/>
+	    <input type="hidden" name="seccion"  value="secciones"/>
+	    <input type="submit" value="Guardar" />
+	</fieldset>
+    </form>
+</div>
+<!-- // #main -->               
+<div class="clear"></div>

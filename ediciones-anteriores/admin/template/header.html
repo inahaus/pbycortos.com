@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+ <?php $config = Config::singleton(); ?>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Administración - <? echo ucfirst($_REQUEST['controlador']);?></title>
+<link rel="shortcut icon" href="favicon.ico" />
+<!--<base href="http://tu-url.com/" />-->
+<!-- CSS -->
+
+<link href="<?php echo $config->get('urlRoot').'/'.$config->get('adminViewsFolder').$config->get('cssAdmin');?>transdmin.css" rel="stylesheet" type="text/css" media="screen" />
+<link href="<?php echo $config->get('urlRoot').'/'.$config->get('adminViewsFolder').$config->get('cssAdmin');?>jNice.css" rel="stylesheet" type="text/css"/>
+<!--[if IE 6]><link rel="stylesheet" type="text/css" media="screen" href="<? echo $config->get('urlRoot').'/'.$config->get('adminViewsFolder').$config->get('cssAdmin');?>css/ie6.css" /><![endif]-->
+<!--[if IE 7]><link rel="stylesheet" type="text/css" media="screen" href="<? echo $config->get('urlRoot').'/'.$config->get('adminViewsFolder').$config->get('cssAdmin');?>css/ie7.css" /><![endif]-->
+
+<!-- JavaScripts-->
+<script type="text/javascript" src="<? echo $config->get('urlRoot').'/'.$config->get('adminViewsFolder').$config->get('jsAdmin');?>jquery.js"></script>
+<script type="text/javascript" src="<? echo $config->get('urlRoot').'/'.$config->get('adminViewsFolder').$config->get('jsAdmin');?>jNice.js"></script>
+
+<link type="text/css" href="<? echo $config->get('urlRoot').'/'.$config->get('adminViewsFolder').$config->get('cssAdmin');?>smoothness/jquery-ui-1.7.2.custom.css" rel="stylesheet" />	
+<script type="text/javascript" src="<? echo $config->get('urlRoot').'/'.$config->get('adminViewsFolder').$config->get('jsAdmin');?>jquery-1.3.2.min.js"></script>
+<script type="text/javascript" src="<? echo $config->get('urlRoot').'/'.$config->get('adminViewsFolder').$config->get('jsAdmin');?>jquery-ui-1.7.2.custom.min.js"></script>
+<script type="text/javascript" src="<? echo $config->get('urlRoot').'/'.$config->get('adminViewsFolder').$config->get('jsAdmin');?>ui.dialog.js" ></script>  
+<script type="text/javascript" src="<? echo $config->get('urlRoot').'/'.$config->get('adminViewsFolder').$config->get('jsAdmin');?>ui.core.js" ></script>  
+<script type="text/javascript" src="<? echo $config->get('urlRoot').'/'.$config->get('adminViewsFolder').$config->get('jsAdmin');?>i18n/ui.datepicker-es.js"></script> 
+<script type="text/javascript" src="<? echo $config->get('urlRoot').'/'.$config->get('adminViewsFolder').$config->get('jsAdmin');?>funciones.js" ></script> 
+<script type="text/javascript" src="<? echo $config->get('urlRoot').'/'.$config->get('adminViewsFolder').$config->get('jsAdmin');?>effects.js" ></script> 
+<?php
+include_once($config->get('root').$config->get('adminViewsFolder').$config->get('jsAdmin')."fckeditor/fckeditor.php") ;
+?>
+
+
+</head>
+
+<body>
+
+
+	<div id="preloader" style="display:none;"><div id="mensaje"><span>&nbsp;</span><p>Cargando... Espere Por Favor</p></div></div>
+	<div id="wrapper">			
+	
+		<!-- h1 tag stays for the logo, you can use the a tag for linking the index page -->
+    	<h1><a href="index.php" class="ajax" title="Inicio"><span><? echo $ubicacion[1]."/".$ubicacion[2];?></span></a></h1>

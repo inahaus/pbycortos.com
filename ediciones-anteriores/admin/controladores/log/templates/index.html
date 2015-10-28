@@ -1,0 +1,57 @@
+<h2><a class="ajax" href="index.php?controlador=log&amp;accion=limpiarLog" title="Limpia el archivo de Log">Limpia el archivo de Log</a></h2>
+<div id="main">
+    <?
+    if(!empty($mensaje)){
+    echo $mensaje;
+    }
+    $debug->log($datos);
+    ?>
+    <h3>Listado de Errores </h3>
+    <table cellpadding="0" cellspacing="0" summary="">
+	<thead>
+	    <tr>
+		<th>#</th>
+		<th>Fecha</th>
+		<th>Nivel</th>
+		<th>&nbsp;</th>
+	    </tr>
+	</thead>
+	<?
+        $num_fila = 1;
+	$j=0;
+        foreach($datos as $i => $line) {	    
+	    if ($num_fila%2!=0){
+		$class="class='odd'";
+	    }
+	    else{
+		$class="";
+	    }
+	    preg_match('~^\[(.*?)\]~', $line, $fecha);
+        if(empty($fecha[1])) {
+	continue;
+        }
+        preg_match('~^\[Error: (.*?)\]~', $line, $tipo);
+        //preg_match('~\] (.*)$~', $line, $message);
+	$debug->log($tipo);
+	    ?>
+	<tr <? echo $class;?>>
+	    <td><? echo $j;?></td>
+	    <td><? echo $fecha[1];?></td>
+	    <td><? echo $tipo[1];?></td>
+	    <td class="action">
+		<a class="edit ajax" href="index.php?controlador=log&amp;accion=verLog&amp;linea=<? echo $j;?>" title="Detalle Error">
+        									Detalle
+		</a>
+	    </td>
+	</tr>
+	<?php
+	$num_fila++;
+	$j++;
+	}?>
+	<tr><td colspan="7">&nbsp;</td></tr>
+    </table>    
+
+
+</div>
+<!-- // #main -->
+<div class="clear"></div>

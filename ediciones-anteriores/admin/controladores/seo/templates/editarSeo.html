@@ -1,0 +1,117 @@
+<h2><a href="index.php?controlador=seo" class="ajax" title="volver">Volver</a></h2>
+<div id="main">
+    <?php
+    if(!empty($mensaje)){
+    echo $mensaje;
+    }
+   $debug->log($datos);
+
+    ?>
+    <h3><? if($_REQUEST['accion']=='nuevoSeo' || $_REQUEST['accion']=='crearSeo'){ echo "Crear Nueva Secci&oacute;n SEO";}else{ echo "Editar Secci&oacute;n SEO";}?></h3>
+    <form action="index.php?controlador=seo&amp;accion=<?if($_REQUEST['accion']!='editarSeo' && $_REQUEST['accion']!="guardarSeo"){ echo "crearSeo";}else{ echo "guardarSeo";}?>" method="post" class="jNice" enctype="multipart/form-data">
+	  <?php
+	  if(is_array($leng)){?>
+	  <div id="tabs">
+	    <ul>
+		<?php
+    	   $i=0;
+    	   foreach ($leng as $key => $val){?>
+		<li><a href="#tabs-<?php echo $i;?>"><?php echo $val['idioma'];?></a></li>
+		<?php
+    	   $i++;
+    	   }
+    	   ?>    		
+	    </ul>
+	    <?php
+    	$total=count($leng);
+    	for($j=0;$j<$total;$j++){?>
+	    <div id="tabs-<?php echo $j;?>">
+		<fieldset>
+		    <p><label>Titulo:</label>
+                        <?php
+                        $hay=0;
+                        for($k=0;$k<count($datos);$k++){
+			if($datos[$k]['siglas']==$leng[$j]['siglas']){?>
+			<input type="text" class="text-long" name="seo[<?php echo $leng[$j]['siglas'];?>][titulo]" value="<?php echo trim($datos[$k]['titulo']);?>"/>
+			<!-- guardo los id y las siglas para recueprarlas mas tarde -->
+			<input type="hidden" class="text-long" name="seo[<?php echo $leng[$j]['siglas'];?>][siglas]" value="<?php echo trim($leng[$j]['siglas']);?>"/>
+			<input type="hidden" class="text-long" name="seo[<?php echo $leng[$j]['siglas'];?>][seccion]" value="<?php echo trim($datos[$k]['seccion']);?>"/>
+			<input type="hidden" class="text-long" name="seo[<?php echo $leng[$j]['siglas'];?>][subseccion]" value="<?php echo trim($datos[$k]['accion']);?>"/>
+			<input type="hidden" class="text-long" name="seo[<?php echo $leng[$j]['siglas'];?>][id]" value="<?php echo trim($datos[$k]['seo_id']);?>"/>
+			<input type="hidden" class="text-long" name="seo[<?php echo $leng[$j]['siglas'];?>][id_leng]" value="<?php echo trim($datos[$k]['id_leng']);?>"/>
+			<?php
+			$hay++;
+			}
+			?>
+
+			<?php
+                        }
+                        if($hay==0){
+			?>
+			<input type="text" class="text-long" name="seo[<?php echo $leng[$j]['siglas'];?>][titulo]" value=""/>
+			<!-- guardo los id y las siglas para recueprarlas mas tarde -->
+			<input type="hidden" class="text-long" name="seo[<?php echo $leng[$j]['siglas'];?>][siglas]" value="<?php echo $leng[$j]['siglas'];?>"/>
+			<input type="hidden" class="text-long" name="seo[<?php echo $leng[$j]['siglas'];?>][seccion]" value="<?php if (!empty($datos[0]['seccion'])){echo trim($datos[0]['seccion']);}else {echo $datos['seccion'];}?>"/>
+			<input type="hidden" class="text-long" name="seo[<?php echo $leng[$j]['siglas'];?>][subseccion]" value="<?php if (!empty($datos[0]['accion'])){echo trim($datos[0]['accion']);}else {echo $datos['accion'];}?>"/>
+			<input type="hidden" class="text-long" name="seo[<?php echo $leng[$j]['siglas'];?>][nombres]" value="<?php if (!empty($datos[0]['nombres'])){echo trim($datos[0]['nombres']);}else {echo $datos['nombres'];}?>"/>
+			<input type="hidden" class="text-long" name="seo[<?php echo $leng[$j]['siglas'];?>][id]" value=""/>
+			<input type="hidden" class="text-long" name="seo[<?php echo $leng[$j]['siglas'];?>][id_leng]" value="<?php echo $leng[$j]['id'];?>"/>
+                        <?php
+                        }
+			?>
+			</p>
+			<p><label>Descripción:</label>
+			    <textarea name="seo[<?php echo $leng[$j]['siglas'];?>][descripcion]" rows="40" cols="8"><?
+                for($k=0;$k<count($datos);$k++){
+                    if($datos[$k]['siglas']==$leng[$j]['siglas']){
+                        echo trim($datos[$k]['descripcion']);
+                    }
+                }
+                ?></textarea>   
+			</p>
+			<p><label>Keywords:</label>
+			    <textarea name="seo[<?php echo $leng[$j]['siglas'];?>][keywords]" rows="40" cols="8"><?
+                for($k=0;$k<count($datos);$k++){
+                    if($datos[$k]['siglas']==$leng[$j]['siglas']){
+                        echo trim($datos[$k]['keywords']);
+                    }
+                }
+                ?></textarea>   
+			</p>
+		</fieldset>
+	    </div>
+	    <?php
+    	}
+    	?> 
+	    <input type="hidden" class="text-long" name="seo[seccion]" value="<?php if (!empty($datos[0]['seccion'])){echo trim($datos[0]['seccion']);}else {echo $datos['seccion'];}?>"/>
+	    <input type="hidden" class="text-long" name="seo[subaccion]" value="<?php if (!empty($datos[0]['accion'])){echo trim($datos[0]['accion']);}else {echo $datos['accion'];}?>"/>
+	    <input type="hidden" class="text-long" name="seo[nombres]" value="<?php if (!empty($datos[0]['nombres'])){echo trim($datos[0]['nombres']);}else {echo $datos['nombre'];}?>"/>
+	</div>
+	<br/>
+	<fieldset>
+	    <input type="submit" value="Guardar" />
+	</fieldset>
+	<?php
+	}
+	else{?>
+	<fieldset>
+	    <p><label>Titulo:</label><input type="text" class="text-long" name="titulo" value="<? echo $datos[0]['titulo'];?>"/></p>
+	    <p><label>Descripción:</label>
+                <textarea name="descripcion" rows="40" cols="8"><? echo $datos[0]['descripcion'];?></textarea>
+	    </p>
+	    <p><label>Keywords:</label>
+                <textarea name="keywords" rows="40" cols="8"><? echo $datos[0]['keywords'];?></textarea>
+	    </p>
+	    <p><label>Nombre:</label><input type="text" class="text-long" name="nombres" value="<? echo $datos[0]['nombres'];?>"/></p>
+	    <p><label>Secci&oacute;n:</label><input type="text" class="text-long" name="seccion" value="<? echo $datos[0]['seccion'];?>"/></p>
+	    <p><label>Acci&oacute;n:</label><input type="text" class="text-long" name="subaccion" value="<? echo $datos[0]['subaccion'];?>"/></p>
+	    <input type="hidden" name="id"  value="<? echo $datos[0]['seo_id'];?>"/>
+	    <input type="submit" value="Guardar" />
+	</fieldset>
+	<?php
+	}
+	?>
+    </form>
+</div>
+<!-- // #main -->               
+<div class="clear"></div>
